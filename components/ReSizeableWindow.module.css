@@ -1,0 +1,25 @@
+.window {
+  position: relative;
+  height: 100vh;
+  background: red;
+}
+
+.resizable {
+  position: absolute;
+}
+
+.horizontalEdge {
+  bottom: 0;
+  cursor: n-resize;
+  height: 5px;
+  left: 0;
+  width: 100%;
+}
+
+.verticalEdge {
+  cursor: e-resize;
+  height: 100%;
+  right: 0;
+  top: 0;
+  width: 5px;
+}
