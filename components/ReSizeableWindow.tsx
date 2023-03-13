@@ -7,37 +7,31 @@ export default function ReSizeableWindow(prop: { width?: number; className?: str
 
   let startX: number = 0;
 
-  const mouseMoveHandler = (event: MouseEvent) => {
+  const mouseMoveHandler = useCallback((event: MouseEvent) => {
     if (resizeableRef.current != null)
     {
-      // console.log(event.clientX);
-      // setWidth(event.clientX - resizeableRef.current.offsetLeft + 5)
-      setWidth(prevWidth => {
-        let newWidth = prevWidth + event.clientX - startX;
-        console.log(prevWidth, "prevWidth");
-        console.log(event.clientX, "clientX");
-        console.log(startX, "startX");
-        return newWidth;
-      })
+      let currentWidth = width;
+      setWidth(() => currentWidth + event.clientX - startX)
     }
-  }
+  }, [startX, width])
+
+
+  const mouseUpHandler = useCallback((event: MouseEvent) => {
+    window.removeEventListener('mousemove', mouseMoveHandler)
+  }, [mouseMoveHandler])
 
   const mouseDownHandler = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    window.addEventListener('mousemove', mouseMoveHandler)
     startX = event.clientX;
-  }, [])
-
-  const mouseUpHandler = useCallback((event: React.MouseEvent<HTMLDivElement>) => {
-    window.removeEventListener('mousemove', mouseMoveHandler)
-  }, [])
-
+    window.addEventListener('mousemove', mouseMoveHandler)
+    window.addEventListener('mouseup', mouseUpHandler)
+  }, [width])
 
   let className = prop.className ? `${styles.window} ${prop.className}` : styles.window;
 
   return (
     <div id={prop.id} className={className} ref={resizeableRef} style={{width: width}}>
       {/* <div className={`${styles.resizable} ${styles.horizontalEdge}`} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}/> */}
-      <div className={`${styles.resizable} ${styles.verticalEdge}`} onMouseDown={mouseDownHandler} onMouseUp={mouseUpHandler}/>
+      <div className={`${styles.resizable} ${styles.verticalEdge}`} onMouseDown={mouseDownHandler}/>
 
     </div>
   )

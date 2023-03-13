@@ -12,8 +12,8 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
-      <ReSizeableWindow id={styles.test1} width={3000}></ReSizeableWindow>
-      <ReSizeableWindow width={3000}></ReSizeableWindow>
+      <ReSizeableWindow id={styles.test1} width={200}></ReSizeableWindow>
+      <ReSizeableWindow width={200}></ReSizeableWindow>
       {/* <Allotment className={styles.sidebar}>
         <Allotment.Pane snap>
           <div>Pane 1</div>
